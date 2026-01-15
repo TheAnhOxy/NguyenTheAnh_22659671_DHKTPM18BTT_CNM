@@ -3,10 +3,10 @@ const db = require('../configs/db');
 const Product = {
     getAll: async (search = '') => {
         if (search) {
-            const [rows] = await db.query('SELECT * FROM products WHERE name LIKE ? ORDER BY id DESC', [`%${search}%`]);
+            const [rows] = await db.query('SELECT * FROM products WHERE name LIKE ? ORDER BY id ASC', [`%${search}%`]);
             return rows;
         }
-        const [rows] = await db.query('SELECT * FROM products ORDER BY id DESC');
+        const [rows] = await db.query('SELECT * FROM products ORDER BY id ASC');
         return rows;
     },
     getById: async (id) => {

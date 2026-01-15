@@ -4,71 +4,175 @@
     <meta charset="UTF-8" />
     <title>Đăng nhập hệ thống</title>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
       body {
-        font-family: "Segoe UI", sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+        background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
         display: flex;
         height: 100vh;
         align-items: center;
         justify-content: center;
-        margin: 0;
+        min-height: 100vh;
       }
+      
+      .login-container {
+        width: 100%;
+        max-width: 420px;
+        padding: 20px;
+      }
+      
       .login-card {
         background: white;
-        padding: 40px;
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        width: 350px;
+        padding: 50px 40px;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         text-align: center;
+        position: relative;
+        overflow: hidden;
       }
+      
+      .login-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #ff6b9d, #feca57, #48dbfb);
+      }
+      
       h2 {
-        color: #333;
-        margin-bottom: 25px;
+        color: #24243e;
+        margin-bottom: 10px;
+        font-size: 28px;
+        font-weight: 600;
       }
+      
+      .subtitle {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 30px;
+      }
+      
+      .form-group {
+        margin-bottom: 18px;
+      }
+      
+      label {
+        display: block;
+        color: #555;
+        font-weight: 500;
+        margin-bottom: 8px;
+        font-size: 13px;
+        text-align: left;
+      }
+      
       input {
         width: 100%;
-        padding: 12px;
-        margin: 10px 0;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        box-sizing: border-box;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        background: #f9f9f9;
       }
+      
+      input:focus {
+        outline: none;
+        border-color: #ff6b9d;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+      }
+      
+      input::placeholder {
+        color: #999;
+      }
+      
       button {
         width: 100%;
-        padding: 12px;
-        background: #667eea;
+        padding: 13px;
+        margin-top: 10px;
+        background: linear-gradient(135deg, #ff6b9d 0%, #feca57 100%);
         color: white;
         border: none;
-        border-radius: 6px;
+        border-radius: 8px;
         cursor: pointer;
-        font-weight: bold;
+        font-weight: 600;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
+      
       button:hover {
-        background: #5a6fd6;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(255, 107, 157, 0.3);
       }
+      
+      button:active {
+        transform: translateY(0);
+      }
+      
       .error {
-        color: #e74c3c;
-        font-size: 14px;
-        margin-bottom: 10px;
+        background: #fee;
+        color: #c33;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border-left: 4px solid #c33;
+        margin-bottom: 20px;
+        font-size: 13px;
+        text-align: left;
+      }
+      
+      .divider {
+        text-align: center;
+        margin: 25px 0 15px;
+        color: #ddd;
+        font-size: 12px;
       }
     </style>
   </head>
   <body>
-    <div class="login-card">
-      <h2>Đăng Nhập</h2>
-      <% if (error) { %>
-      <p class="error"><%= error %></p>
-      <% } %>
-      <form action="/login" method="POST">
-        <input type="text" name="username" placeholder="Tài khoản" required />
-        <input
-          type="password"
-          name="password"
-          placeholder="Mật khẩu"
-          required
-        />
-        <button type="submit">VÀO HỆ THỐNG</button>
-      </form>
+    <div class="login-container">
+      <div class="login-card">
+        <h2>🔐 Đăng Nhập</h2>
+        <p class="subtitle">Quản lý sản phẩm bán lẻ</p>
+        
+        <% if (error) { %>
+        <div class="error">⚠️ <%= error %></div>
+        <% } %>
+        
+        <form action="/login" method="POST">
+          <div class="form-group">
+            <label for="username">Tài khoản</label>
+            <input 
+              type="text" 
+              id="username"
+              name="username" 
+              placeholder="Nhập tên đăng nhập" 
+              required 
+            />
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Mật khẩu</label>
+            <input 
+              type="password" 
+              id="password"
+              name="password" 
+              placeholder="Nhập mật khẩu" 
+              required 
+            />
+          </div>
+          
+          <button type="submit">Vào Hệ Thống</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>

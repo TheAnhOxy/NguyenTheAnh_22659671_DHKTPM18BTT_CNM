@@ -2,82 +2,196 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Cấu hình sản phẩm</title>
+    <title><%= product ? 'Sửa sản phẩm' : 'Thêm sản phẩm' %></title>
     <style>
-      body {
-        font-family: "Segoe UI", sans-serif;
-        background: #f4f7f6;
-        display: flex;
-        justify-content: center;
-        padding-top: 50px;
-      }
-      .card {
-        background: white;
-        padding: 30px;
-        border-radius: 10px;
-        width: 400px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      }
-      input {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ddd;
-        border-radius: 5px;
+      * {
+        margin: 0;
+        padding: 0;
         box-sizing: border-box;
       }
-      .btn-save {
+      
+      body {
+        font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        min-height: 100vh;
+        padding: 40px 20px;
+      }
+      
+      .form-container {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      
+      .form-card {
+        background: white;
+        padding: 45px;
+        border-radius: 16px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .form-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #e74c3c 0%, #f39c12 50%, #3498db 100%);
+      }
+      
+      h2 {
+        color: #2c3e50;
+        margin-bottom: 30px;
+        font-size: 26px;
+        font-weight: 600;
+      }
+      
+      .form-group {
+        margin-bottom: 22px;
+      }
+      
+      label {
+        display: block;
+        color: #34495e;
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+      
+      input {
         width: 100%;
-        padding: 12px;
-        background: #667eea;
+        padding: 13px 15px;
+        border: 2px solid #ecf0f1;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        background: #f9fafb;
+      }
+      
+      input:focus {
+        outline: none;
+        border-color: #e74c3c;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+      }
+      
+      input::placeholder {
+        color: #95a5a6;
+      }
+      
+      input[type="number"] {
+        font-family: 'Courier New', monospace;
+      }
+      
+      .button-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 30px;
+      }
+      
+      .btn-save {
+        flex: 1;
+        padding: 13px;
+        background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
+        font-weight: 600;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
+      
+      .btn-save:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
+      }
+      
+      .btn-save:active {
+        transform: translateY(0);
+      }
+      
       .back-link {
-        display: block;
-        text-align: center;
-        margin-top: 15px;
-        color: #666;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 13px;
+        background: #ecf0f1;
+        color: #34495e;
         text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .back-link:hover {
+        background: #bdc3c7;
+        transform: translateY(-2px);
       }
     </style>
   </head>
   <body>
-    <div class="card">
-      <h2><%= product ? '📝 Sửa sản phẩm' : '➕ Thêm sản phẩm' %></h2>
-      <form action="/save" method="POST">
-        <% if (product) { %>
-        <input type="hidden" name="id" value="<%= product.id %>" />
-        <% } %>
+    <div class="form-container">
+      <div class="form-card">
+        <h2><%= product ? '✏️ Sửa Sản Phẩm' : '➕ Thêm Sản Phẩm' %></h2>
+        
+        <form action="/save" method="POST">
+          <% if (product) { %>
+          <input type="hidden" name="id" value="<%= product.id %>" />
+          <% } %>
 
-        <label>Tên sản phẩm:</label>
-        <input
-          name="name"
-          value="<%= product ? product.name : '' %>"
-          required
-        />
+          <div class="form-group">
+            <label for="name">Tên sản phẩm</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              value="<%= product ? product.name : '' %>"
+              placeholder="Nhập tên sản phẩm"
+              required
+            />
+          </div>
 
-        <label>Giá (VNĐ):</label>
-        <input
-          name="price"
-          type="number"
-          value="<%= product ? product.price : '' %>"
-          required
-        />
+          <div class="form-group">
+            <label for="price">Giá bán (VNĐ)</label>
+            <input
+              id="price"
+              name="price"
+              type="number"
+              value="<%= product ? product.price : '' %>"
+              placeholder="Nhập giá sản phẩm"
+              min="0"
+              required
+            />
+          </div>
 
-        <label>Số lượng:</label>
-        <input
-          name="quantity"
-          type="number"
-          value="<%= product ? product.quantity : '' %>"
-          required
-        />
+          <div class="form-group">
+            <label for="quantity">Số lượng trong kho</label>
+            <input
+              id="quantity"
+              name="quantity"
+              type="number"
+              value="<%= product ? product.quantity : '' %>"
+              placeholder="Nhập số lượng"
+              min="0"
+              required
+            />
+          </div>
 
-        <button type="submit" class="btn-save">LƯU THÔNG TIN</button>
-        <a href="/" class="back-link">Quay lại danh sách</a>
-      </form>
+          <div class="button-group">
+            <button type="submit" class="btn-save">Lưu Thông Tin</button>
+            <a href="/" class="back-link">← Quay Lại</a>
+          </div>
+        </form>
+      </div>
     </div>
   </body>
 </html>
