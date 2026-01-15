@@ -5,22 +5,20 @@ const productRoutes = require("./routes/product.routes");
 
 const app = express();
 
-// 1. Cấu hình Session
 app.use(
   session({
-    secret: "mysecretkey", // Chuỗi bí mật để mã hóa session
+    secret: "mysecretkey",
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 3600000 }, // Session tồn tại trong 1 giờ
+    cookie: { maxAge: 3600000 },
   })
 );
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "public"))); // Để dùng CSS/Image nếu cần
+app.use(express.static(path.join(__dirname, "public")));
 
-// 2. Middleware kiểm tra Login (Auth Guard)
 const checkLogin = (req, res, next) => {
   if (req.session.user) {
     next();
@@ -29,7 +27,6 @@ const checkLogin = (req, res, next) => {
   }
 };
 
-// 3. Định nghĩa các Route đặc biệt cho Login
 const productController = require("./controllers/product.controller");
 
 app.get("/login", (req, res) => {
@@ -39,7 +36,6 @@ app.get("/login", (req, res) => {
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
-  // Gắn cứng tài khoản theo yêu cầu
   if (username === "theanh123" && password === "123456") {
     req.session.user = username;
     res.redirect("/");
@@ -53,7 +49,6 @@ app.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-// 4. Bảo vệ các route sản phẩm bằng checkLogin
 app.use("/", checkLogin, productRoutes);
 
 const PORT = 3000;
