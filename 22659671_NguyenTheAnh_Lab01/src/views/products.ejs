@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý sản phẩm</title>
+</head>
+<body>
+    <h2>Danh sách sản phẩm</h2>
+
+    <form action="/" method="GET">
+        <input type="text" name="search" placeholder="Nhập tên..." value="<%= search %>">
+        <button type="submit">Tìm kiếm</button>
+        <a href="/">Xóa tìm kiếm</a>
+    </form>
+    <br>
+
+    <a href="/add">Thêm mới sản phẩm</a>
+    <br><br>
+
+    <table border="1" cellspacing="0" cellpadding="8">
+        <tr>
+            <th>ID</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Hành động</th>
+        </tr>
+        <% products.forEach(p => { %>
+            <tr>
+                <td><%= p.id %></td>
+                <td><%= p.name %></td>
+                <td><%= p.price %></td>
+                <td><%= p.quantity %></td>
+                <td>
+                    <a href="/edit/<%= p.id %>">Sửa</a>
+                    <a href="/delete/<%= p.id %>" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
+                </td>
+            </tr>
+        <% }) %>
+    </table>
+</body>
+</html>

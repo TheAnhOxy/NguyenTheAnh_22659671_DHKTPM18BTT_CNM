@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Form sản phẩm</title>
+</head>
+<body>
+    <h2><%= product ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm mới' %></h2>
+    <form action="/save" method="POST">
+        <% if (product) { %>
+            <input type="hidden" name="id" value="<%= product.id %>">
+        <% } %>
+
+        Tên: <input name="name" value="<%= product ? product.name : '' %>" required><br><br>
+        Giá: <input name="price" type="number" value="<%= product ? product.price : '' %>" required><br><br>
+        Số lượng: <input name="quantity" type="number" value="<%= product ? product.quantity : '' %>" required><br><br>
+
+        <button type="submit">Lưu lại</button>
+        <a href="/">Hủy</a>
+    </form>
+</body>
+</html>
