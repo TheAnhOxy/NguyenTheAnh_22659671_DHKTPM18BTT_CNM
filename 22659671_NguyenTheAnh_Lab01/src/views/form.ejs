@@ -9,19 +9,24 @@
         padding: 0;
         box-sizing: border-box;
       }
-      
+
       body {
         font-family: "Segoe UI", "Helvetica Neue", sans-serif;
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        background: linear-gradient(
+          135deg,
+          #1a1a2e 0%,
+          #16213e 50%,
+          #0f3460 100%
+        );
         min-height: 100vh;
         padding: 40px 20px;
       }
-      
+
       .form-container {
         max-width: 500px;
         margin: 0 auto;
       }
-      
+
       .form-card {
         background: white;
         padding: 45px;
@@ -30,28 +35,33 @@
         position: relative;
         overflow: hidden;
       }
-      
+
       .form-card::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         height: 5px;
-        background: linear-gradient(90deg, #e74c3c 0%, #f39c12 50%, #3498db 100%);
+        background: linear-gradient(
+          90deg,
+          #e74c3c 0%,
+          #f39c12 50%,
+          #3498db 100%
+        );
       }
-      
+
       h2 {
         color: #2c3e50;
         margin-bottom: 30px;
         font-size: 26px;
         font-weight: 600;
       }
-      
+
       .form-group {
         margin-bottom: 22px;
       }
-      
+
       label {
         display: block;
         color: #34495e;
@@ -59,7 +69,7 @@
         margin-bottom: 10px;
         font-size: 14px;
       }
-      
+
       input {
         width: 100%;
         padding: 13px 15px;
@@ -69,28 +79,28 @@
         transition: all 0.3s ease;
         background: #f9fafb;
       }
-      
+
       input:focus {
         outline: none;
         border-color: #e74c3c;
         background: white;
         box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
       }
-      
+
       input::placeholder {
         color: #95a5a6;
       }
-      
+
       input[type="number"] {
-        font-family: 'Courier New', monospace;
+        font-family: "Courier New", monospace;
       }
-      
+
       .button-group {
         display: flex;
         gap: 12px;
         margin-top: 30px;
       }
-      
+
       .btn-save {
         flex: 1;
         padding: 13px;
@@ -105,16 +115,16 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
       }
-      
+
       .btn-save:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
       }
-      
+
       .btn-save:active {
         transform: translateY(0);
       }
-      
+
       .back-link {
         flex: 1;
         display: flex;
@@ -131,7 +141,7 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
       }
-      
+
       .back-link:hover {
         background: #bdc3c7;
         transform: translateY(-2px);
@@ -142,7 +152,7 @@
     <div class="form-container">
       <div class="form-card">
         <h2><%= product ? '✏️ Sửa Sản Phẩm' : '➕ Thêm Sản Phẩm' %></h2>
-        
+
         <form action="/save" method="POST">
           <% if (product) { %>
           <input type="hidden" name="id" value="<%= product.id %>" />

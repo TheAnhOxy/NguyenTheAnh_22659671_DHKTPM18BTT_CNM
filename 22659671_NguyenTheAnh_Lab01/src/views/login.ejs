@@ -9,23 +9,28 @@
         padding: 0;
         box-sizing: border-box;
       }
-      
+
       body {
         font-family: "Segoe UI", "Helvetica Neue", sans-serif;
-        background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        background: linear-gradient(
+          135deg,
+          #0f0c29 0%,
+          #302b63 50%,
+          #24243e 100%
+        );
         display: flex;
         height: 100vh;
         align-items: center;
         justify-content: center;
         min-height: 100vh;
       }
-      
+
       .login-container {
         width: 100%;
         max-width: 420px;
         padding: 20px;
       }
-      
+
       .login-card {
         background: white;
         padding: 50px 40px;
@@ -35,9 +40,9 @@
         position: relative;
         overflow: hidden;
       }
-      
+
       .login-card::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -45,24 +50,24 @@
         height: 4px;
         background: linear-gradient(90deg, #ff6b9d, #feca57, #48dbfb);
       }
-      
+
       h2 {
         color: #24243e;
         margin-bottom: 10px;
         font-size: 28px;
         font-weight: 600;
       }
-      
+
       .subtitle {
         color: #666;
         font-size: 14px;
         margin-bottom: 30px;
       }
-      
+
       .form-group {
         margin-bottom: 18px;
       }
-      
+
       label {
         display: block;
         color: #555;
@@ -71,7 +76,7 @@
         font-size: 13px;
         text-align: left;
       }
-      
+
       input {
         width: 100%;
         padding: 12px 15px;
@@ -81,18 +86,18 @@
         transition: all 0.3s ease;
         background: #f9f9f9;
       }
-      
+
       input:focus {
         outline: none;
         border-color: #ff6b9d;
         background: white;
         box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
       }
-      
+
       input::placeholder {
         color: #999;
       }
-      
+
       button {
         width: 100%;
         padding: 13px;
@@ -108,16 +113,16 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
       }
-      
+
       button:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 25px rgba(255, 107, 157, 0.3);
       }
-      
+
       button:active {
         transform: translateY(0);
       }
-      
+
       .error {
         background: #fee;
         color: #c33;
@@ -128,7 +133,7 @@
         font-size: 13px;
         text-align: left;
       }
-      
+
       .divider {
         text-align: center;
         margin: 25px 0 15px;
@@ -142,34 +147,34 @@
       <div class="login-card">
         <h2>🔐 Đăng Nhập</h2>
         <p class="subtitle">Quản lý sản phẩm bán lẻ</p>
-        
+
         <% if (error) { %>
         <div class="error">⚠️ <%= error %></div>
         <% } %>
-        
+
         <form action="/login" method="POST">
           <div class="form-group">
             <label for="username">Tài khoản</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               id="username"
-              name="username" 
-              placeholder="Nhập tên đăng nhập" 
-              required 
+              name="username"
+              placeholder="Nhập tên đăng nhập"
+              required
             />
           </div>
-          
+
           <div class="form-group">
             <label for="password">Mật khẩu</label>
-            <input 
-              type="password" 
+            <input
+              type="password"
               id="password"
-              name="password" 
-              placeholder="Nhập mật khẩu" 
-              required 
+              name="password"
+              placeholder="Nhập mật khẩu"
+              required
             />
           </div>
-          
+
           <button type="submit">Vào Hệ Thống</button>
         </form>
       </div>

@@ -9,14 +9,14 @@
         padding: 0;
         box-sizing: border-box;
       }
-      
+
       body {
         font-family: "Segoe UI", "Helvetica Neue", sans-serif;
         background: #f8f9fa;
         padding: 40px 20px;
         min-height: 100vh;
       }
-      
+
       .container {
         max-width: 1200px;
         margin: 0 auto;
@@ -25,7 +25,7 @@
         border-radius: 16px;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
       }
-      
+
       .header {
         display: flex;
         justify-content: space-between;
@@ -34,13 +34,13 @@
         padding-bottom: 20px;
         border-bottom: 3px solid #f0f0f0;
       }
-      
+
       h2 {
         color: #2c3e50;
         font-size: 32px;
         font-weight: 600;
       }
-      
+
       .search-section {
         display: flex;
         gap: 12px;
@@ -48,7 +48,7 @@
         align-items: center;
         flex-wrap: wrap;
       }
-      
+
       .search-section input {
         padding: 12px 15px;
         border: 2px solid #e0e0e0;
@@ -58,14 +58,14 @@
         transition: all 0.3s ease;
         background: #f9fafb;
       }
-      
+
       .search-section input:focus {
         outline: none;
         border-color: #3498db;
         background: white;
         box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
       }
-      
+
       .search-section button {
         padding: 12px 20px;
         background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
@@ -77,12 +77,12 @@
         font-size: 14px;
         transition: all 0.3s ease;
       }
-      
+
       .search-section button:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
       }
-      
+
       .clear-search {
         color: #667eea;
         text-decoration: none;
@@ -91,11 +91,11 @@
         border-radius: 6px;
         transition: all 0.3s ease;
       }
-      
+
       .clear-search:hover {
         background: #f0f0f0;
       }
-      
+
       .btn-add {
         display: inline-block;
         background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
@@ -108,12 +108,12 @@
         margin-bottom: 20px;
         transition: all 0.3s ease;
       }
-      
+
       .btn-add:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3);
       }
-      
+
       table {
         width: 100%;
         border-collapse: collapse;
@@ -123,12 +123,12 @@
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
         border: 1px solid #e8e8e8;
       }
-      
+
       thead {
         background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
         color: white;
       }
-      
+
       th {
         padding: 16px 15px;
         text-align: left;
@@ -137,51 +137,51 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
       }
-      
+
       td {
         padding: 16px 15px;
         border-bottom: 1px solid #f0f0f0;
         color: #555;
         font-size: 14px;
       }
-      
+
       tbody tr {
         transition: all 0.3s ease;
         border-bottom: 1px solid #e8e8e8;
       }
-      
+
       tbody tr:hover {
         background: #f0f7ff;
         box-shadow: inset 0 0 10px rgba(52, 152, 219, 0.1);
       }
-      
+
       .product-name {
         color: #2c3e50;
         font-weight: 600;
       }
-      
+
       .product-i3498db;
         font-weight: 600
         color: #999;
         font-family: 'Courier New', monospace;
       }
-      
+
       .price {
         color: #27ae60;
         font-weight: 600;
         font-size: 15px;
       }
-      
+
       .quantity {
         color: #2980b9;
         font-weight: 600;
       }
-      
+
       .action-btns {
         display: flex;
         gap: 8px;
       }
-      
+
       .btn {
         text-decoration: none;
         padding: 8px 14px;
@@ -195,78 +195,78 @@
         border: none;
         cursor: pointer;
       }
-      
+
       .btn-edit {
         background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
         color: white;
       }
-      
+
       .btn-edit:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
       }
-      
+
       .btn-del {
         background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
         color: white;
       }
-      
+
       .btn-del:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
       }
-      
+
       .btn-logout {
         background: linear-gradient(135deg, #868e96 0%, #748c94 100%);
         color: white;
         padding: 10px 20px;
       }
-      
+
       .btn-logout:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(134, 142, 150, 0.3);
       }
-      
+
       .empty-state {
         text-align: center;
         padding: 60px 20px;
         color: #999;
       }
-      
+
       .empty-state h3 {
         font-size: 20px;
         margin-bottom: 10px;
         color: #666;
       }
-      
+
       @media (max-width: 768px) {
         .container {
           padding: 20px;
         }
-        
+
         .header {
           flex-direction: column;
           align-items: flex-start;
           gap: 15px;
         }
-        
+
         .search-section {
           flex-direction: column;
           width: 100%;
         }
-        
+
         .search-section input {
           width: 100%;
         }
-        
+
         table {
           font-size: 12px;
         }
-        
+
         th, td {
           padding: 10px;
         }
-        
+
         .btn {
           padding: 6px 10px;
           font-size: 11px;
@@ -282,7 +282,17 @@
       </div>
 
       <div class="search-section">
-        <form action="/" method="GET" style="display: flex; gap: 12px; flex: 1; align-items: center; flex-wrap: wrap;">
+        <form
+          action="/"
+          method="GET"
+          style="
+            display: flex;
+            gap: 12px;
+            flex: 1;
+            align-items: center;
+            flex-wrap: wrap;
+          "
+        >
           <input
             type="text"
             name="search"
@@ -314,7 +324,9 @@
           <tr>
             <td><span class="product-id">#<%= p.id %></span></td>
             <td><span class="product-name"><%= p.name %></span></td>
-            <td><span class="price"><%= p.price.toLocaleString('vi-VN') %>₫</span></td>
+            <td>
+              <span class="price"><%= p.price.toLocaleString('vi-VN') %>₫</span>
+            </td>
             <td><span class="quantity"><%= p.quantity %> cái</span></td>
             <td>
               <div class="action-btns">
@@ -323,7 +335,8 @@
                   href="/delete/<%= p.id %>"
                   class="btn btn-del"
                   onclick="return confirm('⚠️ Bạn chắc chắn muốn xóa sản phẩm này?')"
-                >🗑️ Xóa</a>
+                  >🗑️ Xóa</a
+                >
               </div>
             </td>
           </tr>
@@ -333,7 +346,14 @@
       <% } else { %>
       <div class="empty-state">
         <h3>📭 Không có sản phẩm nào</h3>
-        <p>Hãy <a href="/add" style="color: #667eea; text-decoration: none; font-weight: 600;">thêm sản phẩm đầu tiên</a></p>
+        <p>
+          Hãy
+          <a
+            href="/add"
+            style="color: #667eea; text-decoration: none; font-weight: 600"
+            >thêm sản phẩm đầu tiên</a
+          >
+        </p>
       </div>
       <% } %>
     </div>
