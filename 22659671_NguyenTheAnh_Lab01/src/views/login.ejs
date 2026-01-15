@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Đăng nhập hệ thống</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+      }
+      .login-card {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        width: 350px;
+        text-align: center;
+      }
+      h2 {
+        color: #333;
+        margin-bottom: 25px;
+      }
+      input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        box-sizing: border-box;
+      }
+      button {
+        width: 100%;
+        padding: 12px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      button:hover {
+        background: #5a6fd6;
+      }
+      .error {
+        color: #e74c3c;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-card">
+      <h2>Đăng Nhập</h2>
+      <% if (error) { %>
+      <p class="error"><%= error %></p>
+      <% } %>
+      <form action="/login" method="POST">
+        <input type="text" name="username" placeholder="Tài khoản" required />
+        <input
+          type="password"
+          name="password"
+          placeholder="Mật khẩu"
+          required
+        />
+        <button type="submit">VÀO HỆ THỐNG</button>
+      </form>
+    </div>
+  </body>
+</html>

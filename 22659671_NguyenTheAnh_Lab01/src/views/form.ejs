@@ -1,22 +1,83 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>Form sản phẩm</title>
-</head>
-<body>
-    <h2><%= product ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm mới' %></h2>
-    <form action="/save" method="POST">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cấu hình sản phẩm</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f4f7f6;
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+      }
+      .card {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 400px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+      .btn-save {
+        width: 100%;
+        padding: 12px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        color: #666;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2><%= product ? '📝 Sửa sản phẩm' : '➕ Thêm sản phẩm' %></h2>
+      <form action="/save" method="POST">
         <% if (product) { %>
-            <input type="hidden" name="id" value="<%= product.id %>">
+        <input type="hidden" name="id" value="<%= product.id %>" />
         <% } %>
 
-        Tên: <input name="name" value="<%= product ? product.name : '' %>" required><br><br>
-        Giá: <input name="price" type="number" value="<%= product ? product.price : '' %>" required><br><br>
-        Số lượng: <input name="quantity" type="number" value="<%= product ? product.quantity : '' %>" required><br><br>
+        <label>Tên sản phẩm:</label>
+        <input
+          name="name"
+          value="<%= product ? product.name : '' %>"
+          required
+        />
 
-        <button type="submit">Lưu lại</button>
-        <a href="/">Hủy</a>
-    </form>
-</body>
+        <label>Giá (VNĐ):</label>
+        <input
+          name="price"
+          type="number"
+          value="<%= product ? product.price : '' %>"
+          required
+        />
+
+        <label>Số lượng:</label>
+        <input
+          name="quantity"
+          type="number"
+          value="<%= product ? product.quantity : '' %>"
+          required
+        />
+
+        <button type="submit" class="btn-save">LƯU THÔNG TIN</button>
+        <a href="/" class="back-link">Quay lại danh sách</a>
+      </form>
+    </div>
+  </body>
 </html>

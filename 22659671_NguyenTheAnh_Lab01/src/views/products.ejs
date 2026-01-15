@@ -1,42 +1,115 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Quản lý sản phẩm</title>
-</head>
-<body>
-    <h2>Danh sách sản phẩm</h2>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #f4f7f6;
+        padding: 40px;
+      }
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+      }
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+      th {
+        background: #667eea;
+        color: white;
+      }
+      tr:hover {
+        background: #f9f9f9;
+      }
+      .btn {
+        text-decoration: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+      .btn-add {
+        background: #2ecc71;
+        color: white;
+      }
+      .btn-edit {
+        background: #f1c40f;
+        color: white;
+      }
+      .btn-del {
+        background: #e74c3c;
+        color: white;
+      }
+      .btn-logout {
+        background: #95a5a6;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2>📦 Quản lý sản phẩm</h2>
+        <a href="/logout" class="btn btn-logout">Đăng xuất</a>
+      </div>
 
-    <form action="/" method="GET">
-        <input type="text" name="search" placeholder="Nhập tên..." value="<%= search %>">
-        <button type="submit">Tìm kiếm</button>
-        <a href="/">Xóa tìm kiếm</a>
-    </form>
-    <br>
+      <form action="/" method="GET" style="margin-bottom: 20px">
+        <input
+          type="text"
+          name="search"
+          placeholder="Nhập tên..."
+          value="<%= search %>"
+          style="padding: 8px; width: 250px"
+        />
+        <button type="submit" style="padding: 8px 15px">Tìm kiếm</button>
+        <a href="/" style="margin-left: 10px; color: #666">Xóa tìm kiếm</a>
+      </form>
 
-    <a href="/add">Thêm mới sản phẩm</a>
-    <br><br>
+      <a href="/add" class="btn btn-add">+ Thêm mới sản phẩm</a>
 
-    <table border="1" cellspacing="0" cellpadding="8">
+      <table>
         <tr>
-            <th>ID</th>
-            <th>Tên sản phẩm</th>
-            <th>Giá</th>
-            <th>Số lượng</th>
-            <th>Hành động</th>
+          <th>ID</th>
+          <th>Tên sản phẩm</th>
+          <th>Giá</th>
+          <th>Số lượng</th>
+          <th>Hành động</th>
         </tr>
         <% products.forEach(p => { %>
-            <tr>
-                <td><%= p.id %></td>
-                <td><%= p.name %></td>
-                <td><%= p.price %></td>
-                <td><%= p.quantity %></td>
-                <td>
-                    <a href="/edit/<%= p.id %>">Sửa</a>
-                    <a href="/delete/<%= p.id %>" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
-                </td>
-            </tr>
+        <tr>
+          <td>#<%= p.id %></td>
+          <td><strong><%= p.name %></strong></td>
+          <td><%= p.price.toLocaleString() %>đ</td>
+          <td><%= p.quantity %></td>
+          <td>
+            <a href="/edit/<%= p.id %>" class="btn btn-edit">Sửa</a>
+            <a
+              href="/delete/<%= p.id %>"
+              class="btn btn-del"
+              onclick="return confirm('Xóa?')"
+              >Xóa</a
+            >
+          </td>
+        </tr>
         <% }) %>
-    </table>
-</body>
+      </table>
+    </div>
+  </body>
 </html>
