@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống Quản lý Sản phẩm</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .navbar-brand { font-weight: 700; letter-spacing: -0.5px; }
+        .card { border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .product-img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #dee2e6; }
+        .table align-middle th { text-transform: uppercase; font-size: 0.75rem; color: #6c757d; }
+        .badge-stock { font-weight: 600; padding: 0.5em 0.8em; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="/"><i class="bi bi-box-seam me-2"></i>AWS MANAGER</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" href="/">Sản phẩm</a></li>
+                <% if (user.role === 'admin') { %>
+                    <li class="nav-item"><a class="nav-link" href="/categories">Danh mục</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/users">Người dùng</a></li>
+                <% } %>
+            </ul>
+            <div class="d-flex align-items-center text-white">
+                <span class="me-3 small">
+                    <i class="bi bi-person-circle me-1"></i> 
+                    <strong><%= user.username %></strong> (<span class="text-capitalize"><%= user.role %></span>)
+                </span>
+                <a href="/logout" class="btn btn-outline-light btn-sm">Đăng xuất</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-6">
+            <h2 class="fw-bold mb-0">Danh sách sản phẩm</h2>
+        </div>
+        <div class="col-md-6 text-md-end mt-3 mt-md-0">
+            <% if (user.role === 'admin') { %>
+                <a href="/add" class="btn btn-primary px-4 shadow-sm">
+                    <i class="bi bi-plus-lg me-1"></i> Thêm mới
+                </a>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card p-3 d-flex flex-row align-items-center">
+                <div class="bg-primary bg-opacity-10 p-3 rounded-3 me-3 text-primary">
+                    <i class="bi bi-collection fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-0">Tổng loại</h6>
+                    <h3 class="fw-bold mb-0"><%= products.length %></h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 d-flex flex-row align-items-center">
+                <div class="bg-success bg-opacity-10 p-3 rounded-3 me-3 text-success">
+                    <i class="bi bi-stack fs-3"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-0">Tổng tồn kho</h6>
+                    <h3 class="fw-bold mb-0"><%= products.reduce((sum, p) => sum + (p.quantity || 0), 0) %></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light text-muted">
+                        <tr>
+                            <th class="ps-4">Sản phẩm</th>
+                            <th>Giá bán</th>
+                            <th>Tồn kho</th>
+                            <th>Trạng thái</th>
+                            <th class="text-end pe-4">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (products.length === 0) { %>
+                            <tr>
+                                <td colspan="5" class="text-center py-5">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/4076/4076432.png" width="100" class="mb-3 opacity-50">
+                                    <h5 class="text-muted">Chưa có sản phẩm nào được tạo</h5>
+                                </td>
+                            </tr>
+                        <% } %>
+                        
+                        <% products.forEach(p => { %>
+                        <tr>
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center">
+                                    <% if (p.url_image) { %>
+                                        <img src="<%= p.url_image %>" alt="" class="product-img me-3">
+                                    <% } else { %>
+                                        <div class="bg-light d-flex align-items-center justify-content-center me-3 rounded" style="width:60px; height:60px;">
+                                            <i class="bi bi-image text-muted fs-4"></i>
+                                        </div>
+                                    <% } %>
+                                    <div>
+                                        <div class="fw-bold text-dark"><%= p.name %></div>
+                                        <small class="text-muted">ID: <%= p.id.substring(0, 8) %>...</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="fw-semibold text-primary">
+                                    <%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(p.price) %>
+                                </span>
+                            </td>
+                            <td>
+                                <span class="fw-bold fs-6"><%= p.quantity %></span>
+                            </td>
+                            <td>
+                                <% if (p.quantity <= 0) { %>
+                                    <span class="badge bg-danger bg-opacity-10 text-danger badge-stock">
+                                        <i class="bi bi-x-circle me-1"></i> Hết hàng
+                                    </span>
+                                <% } else if (p.quantity < 5) { %>
+                                    <span class="badge bg-warning bg-opacity-10 text-warning badge-stock text-dark">
+                                        <i class="bi bi-exclamation-triangle me-1"></i> Sắp hết
+                                    </span>
+                                <% } else { %>
+                                    <span class="badge bg-success bg-opacity-10 text-success badge-stock">
+                                        <i class="bi bi-check-circle me-1"></i> Còn hàng
+                                    </span>
+                                <% } %>
+                            </td>
+                            <td class="text-end pe-4">
+                                <% if (user.role === 'admin') { %>
+                                    <div class="btn-group">
+                                        <a href="/edit/<%= p.id %>" class="btn btn-outline-warning btn-sm">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <button class="btn btn-outline-danger btn-sm" onclick="confirmDelete('<%= p.id %>')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                    <form id="delete-form-<%= p.id %>" action="/delete/<%= p.id %>" method="POST" style="display: none;"></form>
+                                <% } else { %>
+                                    <span class="badge bg-secondary opacity-50"><i class="bi bi-lock"></i> Chỉ xem</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center py-4 text-muted">
+    <small>© 2026 IUH Advanced Project - Cloud Computing Lab</small>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function confirmDelete(id) {
+        if (confirm('Bạn có chắc chắn muốn xóa mềm sản phẩm này? Sản phẩm sẽ bị ẩn khỏi danh sách.')) {
+            document.getElementById('delete-form-' + id).submit();
+        }
+    }
+</script>
+
+</body>
+</html>

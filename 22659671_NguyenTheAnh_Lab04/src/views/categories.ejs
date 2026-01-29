@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý danh mục</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row">
+            <!-- Form thêm danh mục -->
+            <div class="col-lg-5 mb-5">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-success text-white py-3">
+                        <h5 class="mb-0">
+                            <i class="bi bi-plus-circle me-2"></i>Thêm danh mục mới
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="categoryForm">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Tên danh mục *</label>
+                                <input 
+                                    type="text" 
+                                    id="name"
+                                    name="name"
+                                    class="form-control" 
+                                    placeholder="Nhập tên danh mục"
+                                    required
+                                >
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Mô tả</label>
+                                <textarea 
+                                    id="description"
+                                    name="description"
+                                    class="form-control" 
+                                    rows="3"
+                                    placeholder="Nhập mô tả danh mục (không bắt buộc)"
+                                ></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="bi bi-check-circle me-2"></i>Thêm danh mục
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danh sách danh mục -->
+            <div class="col-lg-7">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white py-3">
+                        <h5 class="mb-0">
+                            <i class="bi bi-list-ul me-2"></i>Danh sách danh mục (<span id="categoryCount"><%= categories.length %></span>)
+                        </h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="categoryList">
+                            <% if (categories.length === 0) { %>
+                                <div class="p-4 text-center text-muted">
+                                    <i class="bi bi-inbox fs-1"></i>
+                                    <p class="mt-2">Chưa có danh mục nào</p>
+                                </div>
+                            <% } else { %>
+                                <ul class="list-group list-group-flush">
+                                    <% categories.forEach(cat => { %>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center py-3 px-4 border-bottom">
+                                            <div>
+                                                <h6 class="mb-1"><%= cat.name %></h6>
+                                                <p class="mb-0 small text-muted">
+                                                    <% if (cat.description) { %>
+                                                        <%= cat.description %>
+                                                    <% } else { %>
+                                                        <em>Không có mô tả</em>
+                                                    <% } %>
+                                                </p>
+                                                <small class="text-secondary">
+                                                    ID: <%= cat.categoryId %>
+                                                </small>
+                                            </div>
+                                        </li>
+                                    <% }); %>
+                                </ul>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 text-center">
+            <a href="/" class="btn btn-light px-5">
+                <i class="bi bi-arrow-left me-2"></i>Quay lại trang chủ
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('categoryForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const description = document.getElementById('description').value.trim();
+
+            if (!name) {
+                alert('Vui lòng nhập tên danh mục');
+                return;
+            }
+
+            try {
+                const response = await fetch('/categories', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, description }),
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('✅ ' + data.message);
+                    document.getElementById('categoryForm').reset();
+                    location.reload();
+                } else {
+                    alert('❌ Lỗi: ' + (data.error || 'Không thể thêm danh mục'));
+                }
+            } catch (err) {
+                console.error(err);
+                alert('❌ Lỗi kết nối: ' + err.message);
+            }
+        });
+    </script>
+</body>
+</html>
