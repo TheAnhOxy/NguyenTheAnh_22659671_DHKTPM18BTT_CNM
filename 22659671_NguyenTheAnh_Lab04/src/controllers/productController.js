@@ -13,7 +13,7 @@ class ProductController {
 
   async handleSoftDelete(req, res) {
     const { id } = req.params;
-    await this.productService.deleteProduct(id);
+    await this.productService.deleteProduct(id, req.session.user.id);
     res.redirect("/");
   }
 }

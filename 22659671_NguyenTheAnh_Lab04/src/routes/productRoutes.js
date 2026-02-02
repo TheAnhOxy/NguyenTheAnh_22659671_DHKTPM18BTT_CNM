@@ -41,13 +41,16 @@ module.exports = (productCtrl, productService, categoryService, s3Client) => {
           url_image = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
         }
 
-        await productService.addProduct({
-          name,
-          price: Number(price),
-          quantity: Number(quantity),
-          categoryId,
-          url_image,
-        });
+        await productService.addProduct(
+          {
+            name,
+            price: Number(price),
+            quantity: Number(quantity),
+            categoryId,
+            url_image,
+          },
+          req.session.user.id,
+        );
         res.json({ success: true, message: "Thêm sản phẩm thành công!" });
       } catch (err) {
         console.error(err);
@@ -111,13 +114,17 @@ module.exports = (productCtrl, productService, categoryService, s3Client) => {
           url_image = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
         }
 
-        await productService.updateProduct(id, {
-          name,
-          price: Number(price),
-          quantity: Number(quantity),
-          categoryId,
-          url_image,
-        });
+        await productService.updateProduct(
+          id,
+          {
+            name,
+            price: Number(price),
+            quantity: Number(quantity),
+            categoryId,
+            url_image,
+          },
+          req.session.user.id,
+        );
         res.json({ success: true, message: "Cập nhật thành công!" });
       } catch (err) {
         console.error(err);

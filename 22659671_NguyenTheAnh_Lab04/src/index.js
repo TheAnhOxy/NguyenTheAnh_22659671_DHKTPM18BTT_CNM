@@ -11,16 +11,19 @@ const s3Client = require("./config/s3");
 const ProductRepository = require("./repositories/productRepository");
 const CategoryRepository = require("./repositories/categoryRepository");
 const UserRepository = require("./repositories/userRepository");
+const ProductLogRepository = require("./repositories/productLogRepository");
 
 // Services
 const ProductService = require("./services/productService");
 const CategoryService = require("./services/categoryService");
 const UserService = require("./services/userService");
+const ProductLogService = require("./services/productLogService");
 
 // Controllers
 const ProductController = require("./controllers/productController");
 const CategoryController = require("./controllers/categoryController");
 const UserController = require("./controllers/userController");
+const ProductLogController = require("./controllers/productLogController");
 
 // Initialize repositories
 const productRepo = new ProductRepository(
@@ -32,9 +35,16 @@ const categoryRepo = new CategoryRepository(
   process.env.DYNAMODB_CATEGORY_TABLE,
 );
 const userRepo = new UserRepository(docClient, process.env.DYNAMODB_USER_TABLE);
+const productLogRepo = new ProductLogRepository(
+  docClient,
+  process.env.DYNAMODB_LOG_TABLE,
+);
 
 // Initialize services
-const productService = new ProductService(productRepo);
+const productService = new ProductService(
+  productRepo,
+  new ProductLogService(productLogRepo),
+);
 const categoryService = new CategoryService(categoryRepo);
 const userService = new UserService(userRepo);
 
@@ -42,6 +52,9 @@ const userService = new UserService(userRepo);
 const productCtrl = new ProductController(productService);
 const categoryCtrl = new CategoryController(categoryService);
 const userCtrl = new UserController(userService);
+const productLogCtrl = new ProductLogController(
+  new ProductLogService(productLogRepo),
+);
 
 // Express app setup
 const app = express();
@@ -72,12 +85,14 @@ const categoryRoutes = require("./routes/categoryRoutes")(
   categoryService,
 );
 const userRoutes = require("./routes/userRoutes")(userCtrl, userService);
+const productLogRoutes = require("./routes/productLogRoutes")(productLogCtrl);
 
 // Mount routes
 app.use("/", authRoutes);
 app.use("/", productRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/users", userRoutes);
+app.use("/logs", productLogRoutes);
 
 // Start server
 const PORT = process.env.PORT || 3000;

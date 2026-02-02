@@ -2,8 +2,9 @@ const { v4: uuidv4 } = require("uuid");
 const { GetCommand, UpdateCommand } = require("@aws-sdk/lib-dynamodb");
 
 class ProductService {
-  constructor(productRepo) {
+  constructor(productRepo, productLogService) {
     this.productRepo = productRepo;
+    this.productLogService = productLogService;
   }
 
   // Lấy tất cả sản phẩm chưa xóa mềm
@@ -23,7 +24,7 @@ class ProductService {
   }
 
   // Thêm sản phẩm
-  async addProduct(data) {
+  async addProduct(data, userId) {
     const product = {
       ...data,
       id: uuidv4(),
@@ -31,11 +32,22 @@ class ProductService {
       createdAt: new Date().toISOString(),
     };
     await this.productRepo.create(product);
+
+    // Ghi log
+    if (this.productLogService && userId) {
+      try {
+        await this.productLogService.logCreateProduct(product.id, userId);
+        console.log(`✓ Log CREATE: productId=${product.id}, userId=${userId}`);
+      } catch (err) {
+        console.error(`✗ Lỗi ghi log CREATE: ${err.message}`);
+      }
+    }
+
     return product;
   }
 
   // Cập nhật sản phẩm
-  async updateProduct(id, data) {
+  async updateProduct(id, data, userId) {
     const command = new UpdateCommand({
       TableName: this.productRepo.tableName,
       Key: { id },
@@ -58,12 +70,34 @@ class ProductService {
         ":updatedAt": new Date().toISOString(),
       },
     });
-    return await this.productRepo.docClient.send(command);
+    const result = await this.productRepo.docClient.send(command);
+
+    // Ghi log
+    if (this.productLogService && userId) {
+      try {
+        await this.productLogService.logUpdateProduct(id, userId);
+        console.log(`✓ Log UPDATE: productId=${id}, userId=${userId}`);
+      } catch (err) {
+        console.error(`✗ Lỗi ghi log UPDATE: ${err.message}`);
+      }
+    }
+
+    return result;
   }
 
   // Xóa mềm sản phẩm
-  async deleteProduct(productId) {
+  async deleteProduct(productId, userId) {
     await this.productRepo.softDelete(productId);
+
+    // Ghi log
+    if (this.productLogService && userId) {
+      try {
+        await this.productLogService.logDeleteProduct(productId, userId);
+        console.log(`✓ Log DELETE: productId=${productId}, userId=${userId}`);
+      } catch (err) {
+        console.error(`✗ Lỗi ghi log DELETE: ${err.message}`);
+      }
+    }
   }
 }
 module.exports = ProductService;
